@@ -101,7 +101,7 @@
 
       team.forEach((p, i) => {
         const card = `<div class='pokemon-card'>
-            <img src='${p.image}' />
+            <img src='${p.image}' crossorigin="anonymous" />
             <span>${p.name.charAt(0).toUpperCase() + p.name.slice(1)}</span>
           </div>`;
         if (i < 3) col1.innerHTML += card;
@@ -116,15 +116,38 @@
     }
 
     function salvarImagem() {
-      html2canvas(document.getElementById("captureArea")).then(canvas => {
-        const link = document.createElement("a");
-        link.download = "meu-time.png";
-        link.href = canvas.toDataURL();
-        link.click();
-      });
+      const element = document.getElementById("captureArea");
+      domtoimage.toPng(element, {
+        quality: 0.95,  // Melhora a qualidade
+        bgcolor: '#1b1d2e',  // Fundo da tela da Pokédex para evitar transparências estranhas
+        width: element.scrollWidth,  // Força largura real
+        height: element.scrollHeight  // Força altura real
+      })
+        .then(function (dataUrl) {
+          const link = document.createElement("a");
+          link.download = "meu-time.png";
+          link.href = dataUrl;
+          link.click();
+        })
+        .catch(function (error) {
+          console.error("Erro ao gerar PNG:", error);
+          // Fallback: Tenta gerar SVG se PNG falhar
+          domtoimage.toSvg(element)
+            .then(function (dataUrl) {
+              const link = document.createElement("a");
+              link.download = "meu-time.svg";
+              link.href = dataUrl;
+              link.click();
+              alert("PNG falhou, baixando como SVG. Abra em um editor de imagens para converter.");
+            })
+            .catch(function (svgError) {
+              console.error("Erro ao gerar SVG:", svgError);
+              alert("Erro ao baixar a imagem. Tente recarregar a página ou use um navegador diferente.");
+            });
+        });
     }
   </script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
 </body>
 </html>
