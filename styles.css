@@ -5,8 +5,7 @@ body {
   background: linear-gradient(#0a0f24, #0d1b3d);
   min-height: 100vh;
   color: #fff;
-  display: flex;
-  justify-content: center;
+  display: block;
 }
 
 .container {
@@ -186,4 +185,5 @@ input {
 .button:active {
   transform: scale(0.95);
   filter: brightness(1.3);
+
 }
