@@ -5,9 +5,11 @@ body {
   background: linear-gradient(#0a0f24, #0d1b3d);
   min-height: 100vh;
   color: #fff;
-  display: block;
+  display: flex;  /* Corrigido para flex, como no original */
+  justify-content: center;
 }
 
+/* Resto do CSS permanece igual */
 .container {
   width: 95%;
   max-width: 650px;
@@ -185,5 +187,4 @@ input {
 .button:active {
   transform: scale(0.95);
   filter: brightness(1.3);
-
 }
