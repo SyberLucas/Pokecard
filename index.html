@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Time Pokémon - Web</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="pokedex-frame">
+    <div class="pokedex-top">
+      <div class="lights">
+        <div class="light big"></div>
+        <div class="light small"></div>
+        <div class="light small"></div>
+        <div class="light small"></div>
+      </div>
+    </div>
+
+    <div class="pokedex-screen" id="captureArea">
+      <div class="container">
+
+        <div class="trainer-section">
+          <div class="trainer-image">
+            <img id="trainerPhoto" src="imagens/trainer-placeholder.png">
+          </div>
+          <div style="flex:1;">
+            <input id="trainerName" placeholder="Treinador" />
+            <input id="teamName" placeholder="Time" />
+          </div>
+        </div>
+
+        <input type="file" id="cameraInput" accept="image/*" style="display:none;" />
+        <button class="button" onclick="document.getElementById('cameraInput').click()">Escolher Foto</button>
+
+        <h2 class="team-title">Meu Time Pokémon (<span id="count">0</span>/6)</h2>
+
+        <input id="pokemonInput" placeholder="Nome do Pokémon" />
+        <button class="button" onclick="buscarPokemon()">Adicionar</button>
+        <p class="error" id="errorText"></p>
+
+        <div class="team">
+          <div class="column" id="col1"></div>
+          <div class="column" id="col2"></div>
+        </div>
+
+        <button class="button reset" onclick="resetTeam()">Resetar Time</button>
+        <button class="button save" onclick="salvarImagem()">Baixar Imagem</button>
+      </div>
+    </div>
+
+    <div class="pokedex-bottom"></div>
+  </div>
+  <audio id="openSound" src="pokedex-open.mp3"></audio>
+  <audio id="beepSound" src="pokedex-beep.mp3"></audio>
+
+  <script>
+    let team = [];
+
+    document.getElementById("cameraInput").addEventListener("change", function (e) {
+      const file = e.target.files[0];
+      const img = document.getElementById("trainerPhoto");
+
+      if (file) {
+        img.src = URL.createObjectURL(file);
+      } else {
+        img.src = "imagens/placeholder.png";
+      }
+    });
+
+    async function buscarPokemon() {
+      const name = document.getElementById("pokemonInput").value.trim();
+      const errorText = document.getElementById("errorText");
+      if (!name) return;
+
+      try {
+        const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`);
+        if (!res.ok) throw new Error();
+
+        const data = await res.json();
+        if (team.length >= 6) {
+          errorText.textContent = "Time completo (6/6)";
+          return;
+        }
+
+        team.push({ name: data.name, image: data.sprites.front_default });
+        document.getElementById("pokemonInput").value = "";
+        errorText.textContent = "";
+        renderTeam();
+      } catch {
+        errorText.textContent = "Pokémon não encontrado";
+      }
+    }
+
+    function renderTeam() {
+      document.getElementById("count").textContent = team.length;
+      const col1 = document.getElementById("col1");
+      const col2 = document.getElementById("col2");
+      col1.innerHTML = "";
+      col2.innerHTML = "";
+
+      team.forEach((p, i) => {
+        const card = `<div class='pokemon-card'>
+            <img src='${p.image}' />
+            <span>${p.name.charAt(0).toUpperCase() + p.name.slice(1)}</span>
+          </div>`;
+        if (i < 3) col1.innerHTML += card;
+        else col2.innerHTML += card;
+      });
+    }
+
+    function resetTeam() {
+      team = [];
+      renderTeam();
+      document.getElementById("errorText").textContent = "";
+    }
+
+    function salvarImagem() {
+      html2canvas(document.getElementById("captureArea")).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "meu-time.png";
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    }
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</body>
+</html>
