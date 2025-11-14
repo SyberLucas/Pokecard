@@ -117,20 +117,20 @@
     }
 
     function salvarImagem() {
-      const element = document.getElementById("captureArea");
+      const element = document.querySelector(".pokedex-frame");
       html2canvas(element, {
-        useCORS: true,  // Permite imagens externas
-        allowTaint: true,  // Permite imagens "sujas"
-        scale: 1.5,  // Boa resolução sem sobrecarga
-        backgroundColor: null,  // Deixa o CSS controlar o fundo
-        removeContainer: true,  // Remove elementos desnecessários
-        foreignObjectRendering: true,  // Melhor renderização de imagens externas
-        letterRendering: true,  // Melhor renderização de texto
-        logging: false,  // Desativa logs
-        width: element.scrollWidth,  // Captura largura total
-        height: element.scrollHeight,  // Captura altura total
-        scrollX: 0,  // Começa do topo esquerdo
-        scrollY: 0  // Começa do topo esquerdo
+        useCORS: true,  
+        allowTaint: true,  
+        scale: 1.5,  
+        backgroundColor: null, 
+        removeContainer: true,  
+        foreignObjectRendering: true, 
+        letterRendering: true,  
+        logging: false,  
+        width: element.scrollWidth,  
+        height: element.scrollHeight,  
+        scrollX: 0,  
+        scrollY: 0  
       }).then(canvas => {
         const link = document.createElement("a");
         link.download = "meu-time.png";
@@ -138,7 +138,7 @@
         link.click();
       }).catch(error => {
         console.error("Erro ao gerar PNG:", error);
-        // Fallback: Tenta gerar SVG com dom-to-image
+       
         if (typeof domtoimage !== 'undefined') {
           domtoimage.toSvg(element)
             .then(function (dataUrl) {
@@ -160,6 +160,7 @@
   </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>  <!-- Fallback -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>  
 </body>
 </html>
+
