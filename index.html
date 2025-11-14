@@ -121,10 +121,8 @@
         useCORS: true,  // Permite imagens externas
         allowTaint: true,  // Permite imagens "sujas"
         scale: 1.5,  // Boa resolução sem sobrecarga
-        backgroundColor: '#1b1d2e',  // Fundo escuro da tela da Pokédex
         removeContainer: true,  // Remove elementos desnecessários
         foreignObjectRendering: true,  // Melhor renderização de imagens externas
-        letterRendering: true,  // Melhor renderização de texto
         logging: false  // Desativa logs
       }).then(canvas => {
         const link = document.createElement("a");
@@ -158,3 +156,4 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>  <!-- Fallback -->
 </body>
 </html>
+
