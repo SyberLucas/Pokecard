@@ -51,9 +51,7 @@
 
     <div class="pokedex-bottom"></div>
   </div>
-  <audio id="openSound" src="pokedex-open.mp3"></audio>
-  <audio id="beepSound" src="pokedex-beep.mp3"></audio>
-
+  
   <script>
     let team = [];
 
@@ -119,7 +117,7 @@
       const element = document.getElementById("captureArea");
       html2canvas(element, {
         useCORS: true,  // Permite imagens externas
-        backgroundColor: null
+        backgroundColor: null,
         allowTaint: true,  // Permite imagens "sujas"
         scale: 1.5,  // Boa resolução sem sobrecarga
         removeContainer: true,  // Remove elementos desnecessários
@@ -157,5 +155,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>  <!-- Fallback -->
 </body>
 </html>
+
 
 
