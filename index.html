@@ -126,7 +126,11 @@
         removeContainer: true,  // Remove elementos desnecessários
         foreignObjectRendering: true,  // Melhor renderização de imagens externas
         letterRendering: true,  // Melhor renderização de texto
-        logging: false  // Desativa logs
+        logging: false,  // Desativa logs
+        width: element.scrollWidth,  // Captura largura total
+        height: element.scrollHeight,  // Captura altura total
+        scrollX: 0,  // Começa do topo esquerdo
+        scrollY: 0  // Começa do topo esquerdo
       }).then(canvas => {
         const link = document.createElement("a");
         link.download = "meu-time.png";
