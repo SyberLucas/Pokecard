@@ -116,13 +116,13 @@
     function salvarImagem() {
       const element = document.getElementById("captureArea");
       html2canvas(element, {
-        useCORS: true,  // Permite imagens externas
-        backgroundColor: null,
-        allowTaint: true,  // Permite imagens "sujas"
-        scale: 1.5,  // Boa resolução sem sobrecarga
-        removeContainer: true,  // Remove elementos desnecessários
-        foreignObjectRendering: true,  // Melhor renderização de imagens externas
-        logging: false  // Desativa logs
+        useCORS: true, 
+        backgroundColor: '#1b1d2e',
+        allowTaint: true,  
+        scale: 1.5,  
+        removeContainer: true,  
+        foreignObjectRendering: true,  
+        logging: false  
       }).then(canvas => {
         const link = document.createElement("a");
         link.download = "meu-time.png";
@@ -155,6 +155,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>  <!-- Fallback -->
 </body>
 </html>
+
 
 
 
