@@ -18,6 +18,7 @@
     </div>
 
     <div class="pokedex-screen" id="captureArea">
+      <div class="background-overlay"></div>  <!-- Fundo sólido para captura -->
       <div class="container">
 
         <div class="trainer-section">
@@ -51,7 +52,9 @@
 
     <div class="pokedex-bottom"></div>
   </div>
-  
+  <audio id="openSound" src="pokedex-open.mp3"></audio>
+  <audio id="beepSound" src="pokedex-beep.mp3"></audio>
+
   <script>
     let team = [];
 
@@ -116,13 +119,14 @@
     function salvarImagem() {
       const element = document.getElementById("captureArea");
       html2canvas(element, {
-        useCORS: true, 
-        backgroundColor: '#1b1d2e',
-        allowTaint: true,  
-        scale: 1.5,  
-        removeContainer: true,  
-        foreignObjectRendering: true,  
-        logging: false  
+        useCORS: true,  // Permite imagens externas
+        allowTaint: true,  // Permite imagens "sujas"
+        scale: 1.5,  // Boa resolução sem sobrecarga
+        backgroundColor: null,  // Deixa o CSS controlar o fundo
+        removeContainer: true,  // Remove elementos desnecessários
+        foreignObjectRendering: true,  // Melhor renderização de imagens externas
+        letterRendering: true,  // Melhor renderização de texto
+        logging: false  // Desativa logs
       }).then(canvas => {
         const link = document.createElement("a");
         link.download = "meu-time.png";
@@ -155,7 +159,3 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>  <!-- Fallback -->
 </body>
 </html>
-
-
-
-
