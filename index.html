@@ -120,11 +120,10 @@
       html2canvas(element, {
         useCORS: true,  // Permite imagens externas
         allowTaint: true,  // Permite imagens "sujas"
-        scale: 2,  // Alta resolução para melhor qualidade
-        backgroundColor: '#1b1d2e',  // Fundo da tela da Pokédex
-        width: element.scrollWidth,
-        height: element.scrollHeight,
-        logging: false  // Desativa logs para performance
+        scale: 2,  // Alta resolução
+        removeContainer: true,  // Remove elementos desnecessários
+        foreignObjectRendering: true,  // Melhor renderização de imagens externas
+        logging: false  // Desativa logs
       }).then(canvas => {
         const link = document.createElement("a");
         link.download = "meu-time.png";
