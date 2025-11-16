@@ -58,52 +58,57 @@
   <script>
     let team = [];
 
-     async function getBase64FromUrl(url) {
-      const res = await fetch(url);
-      const blob = await res.blob();
-      return new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.onloadend = () => resolve(reader.result);
-        reader.readAsDataURL(blob);
-      });
-    }
+     async function convertToBase64(url) {
+  const res = await fetch(url);
+  const blob = await res.blob();
+  return new Promise(resolve => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(reader.result);
+    reader.readAsDataURL(blob);
+  });
+}
 
     
 
-    document.getElementById("cameraInput").addEventListener("change", function (e) {
-      const file = e.target.files[0];
-      const img = document.getElementById("trainerPhoto");
+   document.getElementById("cameraInput").addEventListener("change", async function (e) {
+  const file = e.target.files[0];
+  const img = document.getElementById("trainerPhoto");
 
-      if (file) {
-        img.src = URL.createObjectURL(file);
-      } else {
-        img.src = "imagens/placeholder.png";
-      }
-    });
+  if (file) {
+    const localURL = URL.createObjectURL(file);
+    const base64 = await convertToBase64(localURL);
+    img.src = base64;
+  } else {
+    img.src = "imagens/trainer-placeholder.png";
+  }
+});
 
     async function buscarPokemon() {
-      const name = document.getElementById("pokemonInput").value.trim();
-      const errorText = document.getElementById("errorText");
-      if (!name) return;
+  const name = document.getElementById("pokemonInput").value.trim();
+  const errorText = document.getElementById("errorText");
+  if (!name) return;
 
-      try {
-        const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`);
-        if (!res.ok) throw new Error();
+  try {
+    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`);
+    if (!res.ok) throw new Error();
 
-        const data = await res.json();
-        if (team.length >= 6) {
-          errorText.textContent = "Time completo (6/6)";
-          return;
-        }
-
-        team.push({ name: data.name, image: data.sprites.front_default });
-        document.getElementById("pokemonInput").value = "";
-        errorText.textContent = "";
-        renderTeam();
-      } catch {
-        errorText.textContent = "Pokémon não encontrado";
-      }
+    const data = await res.json();
+    if (team.length >= 6) {
+      errorText.textContent = "Time completo (6/6)";
+      return;
     }
+
+    const base64 = await convertToBase64(data.sprites.front_default);
+
+    team.push({ name: data.name, image: base64 });
+    document.getElementById("pokemonInput").value = "";
+    errorText.textContent = "";
+    renderTeam();
+  } catch {
+    errorText.textContent = "Pokémon não encontrado";
+  }
+}
+
 
     function renderTeam() {
       document.getElementById("count").textContent = team.length;
@@ -175,6 +180,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>  
 </body>
 </html>
+
 
 
 
