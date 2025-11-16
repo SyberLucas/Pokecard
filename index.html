@@ -134,26 +134,24 @@
     }
 
     function salvarImagem() {
-    const element = document.querySelector(".pokedex-frame");
+  const element = document.querySelector(".pokedex-frame");
 
-      html2canvas(element, {
-        useCORS: true,  
-        allowTaint: true,  
-        scale: 1.5,  
-        backgroundColor: null, 
-        removeContainer: true,  
-        foreignObjectRendering: true, 
-        letterRendering: true,  
-        logging: false,  
-        width: element.scrollWidth,  
-        height: element.scrollHeight,  
-        scrollX: 0,  
-        scrollY: 0  
-      }).then(canvas => {
-        const link = document.createElement("a");
-        link.download = "meu-time.png";
-        link.href = canvas.toDataURL("image/png");
-        link.click();
+  const rect = element.getBoundingClientRect();
+
+  html2canvas(element, {
+    useCORS: true,
+    allowTaint: true,
+    backgroundColor: null,
+    scale: window.devicePixelRatio,
+    width: rect.width,
+    height: rect.height,
+    scrollX: 0,
+    scrollY: -window.scrollY
+  }).then(canvas => {
+    const link = document.createElement("a");
+    link.download = "meu-time.png";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
       }).catch(error => {
         console.error("Erro ao gerar PNG:", error);
        
@@ -181,6 +179,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>  
 </body>
 </html>
+
 
 
 
