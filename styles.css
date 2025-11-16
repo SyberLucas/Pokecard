@@ -180,6 +180,7 @@ input {
 
 .background-overlay {
   position: absolute;
+   pointer-events: none !important;
   top: 0;
   left: 0;
   width: 100%;
@@ -201,6 +202,7 @@ input {
   transform: scale(0.95);
   filter: brightness(1.3);
 }
+
 
 
 
