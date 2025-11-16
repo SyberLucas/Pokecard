@@ -150,6 +150,9 @@
     scrollX: 0,
     scrollY: -window.scrollY
   }).then(canvas => {
+    document.querySelectorAll(".no-capture").forEach(el => {
+            el.classList.remove("no-capture");
+        });
     const link = document.createElement("a");
     link.download = "meu-time.png";
     link.href = canvas.toDataURL("image/png");
@@ -181,6 +184,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>  
 </body>
 </html>
+
 
 
 
