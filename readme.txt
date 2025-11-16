@@ -73,12 +73,10 @@ Configure a root /
 
 
 	#Problemas Comuns
- *O layout some após a animação
-	Solução: remover opacity: 0 e transform: scale(0.7) da classe .pokedex-frame
-
+ *A Imagem é salva com uma caixa roxa por cima
+	
  *Foto não centraliza
-	Solução aplicada: object-fit: cover; object-position: center;
-
+	
  
 	#Exemplo de Uso
 
@@ -89,5 +87,6 @@ Escolha nome do treinador
 Digite nomes de Pokémon (ex: pikachu, charizard)
 
 Seu time aparecerá automaticamente
+
 
 Clique em Baixar Imagem.
