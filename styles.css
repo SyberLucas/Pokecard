@@ -128,7 +128,8 @@ input {
 
 .pokedex-frame {
   animation: popIn 0.6s ease forwards;
-  width: 1500px;
+  width: 750px;
+   height: 800;
   margin: 20px auto;
   background: #dd1b1b;
   border-radius: 25px;
@@ -202,6 +203,7 @@ input {
   transform: scale(0.95);
   filter: brightness(1.3);
 }
+
 
 
 
