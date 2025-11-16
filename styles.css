@@ -142,6 +142,10 @@ input {
   padding: 10px;
 }
 
+.no-capture {
+    display: none !important;
+}
+
 .lights {
   display: flex;
   gap: 12px;
@@ -197,5 +201,6 @@ input {
   transform: scale(0.95);
   filter: brightness(1.3);
 }
+
 
 
