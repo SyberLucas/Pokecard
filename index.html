@@ -18,7 +18,8 @@
     </div>
 
     <div class="pokedex-screen" id="captureArea">
-      <div class="background-overlay"></div> 
+      <div class="background-overlay no-capture-item"></div>
+
       <div class="container">
 
         <div class="trainer-section">
@@ -135,9 +136,9 @@
     function salvarImagem() {
   const element = document.querySelector(".pokedex-frame");
 
-  document.querySelectorAll(".overlay, .backdrop, .tinta, .blur, .filter").forEach(el => {
-        el.classList.add("no-capture");
-    });
+  document.querySelectorAll(".no-capture-item").forEach(el => {
+    el.classList.add("no-capture");
+  });
 
   html2canvas(element, {
     useCORS: true,
@@ -152,8 +153,8 @@
     scrollY: -window.scrollY
   }).then(canvas => {
     document.querySelectorAll(".no-capture").forEach(el => {
-            el.classList.remove("no-capture");
-        });
+      el.classList.remove("no-capture");
+    });
     const link = document.createElement("a");
     link.download = "meu-time.png";
     link.href = canvas.toDataURL("image/png");
@@ -185,6 +186,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>  
 </body>
 </html>
+
 
 
 
