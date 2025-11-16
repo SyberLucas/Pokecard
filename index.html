@@ -132,12 +132,12 @@
       const element = document.querySelector(".pokedex-frame");
       const rect = element.getBoundingClientRect();
 
-      // Esconde elementos indesejados durante a captura
+      
       document.querySelectorAll(".no-capture-item").forEach(el => {
         el.classList.add("no-capture");
       });
 
-      // Desativa animações temporariamente para evitar distorções
+      
       element.style.animation = 'none';
 
       html2canvas(element, {
@@ -159,7 +159,7 @@
         link.href = canvas.toDataURL("image/png");
         link.click();
 
-        // Restaura animações e remove classes
+        
         element.style.animation = '';
         document.querySelectorAll(".no-capture-item").forEach(el => {
           el.classList.remove("no-capture");
@@ -210,3 +210,4 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
 </body>
 </html>
+
