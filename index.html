@@ -7,51 +7,7 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="pokedex-frame">
-    <div class="pokedex-top">
-      <div class="lights">
-        <div class="light big"></div>
-        <div class="light small"></div>
-        <div class="light small"></div>
-        <div class="light small"></div>
-      </div>
-    </div>
-
-    <div class="pokedex-screen" id="captureArea">
-      <div class="background-overlay no-capture-item"></div>
-
-      <div class="container">
-        <div class="trainer-section">
-          <div class="trainer-image">
-            <img id="trainerPhoto" src="imagens/trainer-placeholder.png">
-          </div>
-          <div style="flex:1;">
-            <input id="trainerName" placeholder="Treinador" />
-            <input id="teamName" placeholder="Time" />
-          </div>
-        </div>
-
-        <input type="file" id="cameraInput" accept="image/*" style="display:none;" />
-        <button class="button" onclick="document.getElementById('cameraInput').click()">Escolher Foto</button>
-
-        <h2 class="team-title">Meu Time Pokémon (<span id="count">0</span>/6)</h2>
-
-        <input id="pokemonInput" placeholder="Nome do Pokémon" />
-        <button class="button" onclick="buscarPokemon()">Adicionar</button>
-        <p class="error" id="errorText"></p>
-
-        <div class="team">
-          <div class="column" id="col1"></div>
-          <div class="column" id="col2"></div>
-        </div>
-
-        <button class="button reset" onclick="resetTeam()">Resetar Time</button>
-        <button class="button save" onclick="salvarImagem()">Baixar Imagem</button>
-      </div>
-    </div>
-
-    <div class="pokedex-bottom"></div>
-  </div>
+  <!-- Seu HTML permanece o mesmo -->
 
   <script>
     let team = [];
@@ -132,38 +88,37 @@
       const element = document.querySelector(".pokedex-frame");
       const rect = element.getBoundingClientRect();
 
+      // Esconde elementos indesejados durante a captura
       document.querySelectorAll(".no-capture-item").forEach(el => {
         el.classList.add("no-capture");
       });
-
-      element.style.animation = 'none';
 
       html2canvas(element, {
         useCORS: true,
         allowTaint: true,
         backgroundColor: null,
         removeContainer: true,
-        scale: 2,
+        scale: 2,  // Fixo em 2 para evitar problemas com devicePixelRatio
         width: rect.width,
         height: rect.height,
-        x: rect.left,
-        y: rect.top,
-        scrollX: -rect.left,
-        scrollY: -rect.top,
-        logging: false
+        scrollX: 0,
+        scrollY: -window.scrollY,
+        logging: false  // Remove logs desnecessários
+        // Removido: foreignObjectRendering: true (não necessário e causa problemas)
       }).then(canvas => {
         const link = document.createElement("a");
         link.download = "meu-time.png";
         link.href = canvas.toDataURL("image/png");
         link.click();
 
-        element.style.animation = '';
+        // Remove a classe após a captura
         document.querySelectorAll(".no-capture-item").forEach(el => {
           el.classList.remove("no-capture");
         });
       }).catch(error => {
         console.error("Erro ao gerar PNG:", error);
 
+        // Fallback para SVG
         if (typeof domtoimage !== 'undefined') {
           domtoimage.toSvg(element)
             .then(function (dataUrl) {
@@ -171,26 +126,26 @@
               link.download = "meu-time.svg";
               link.href = dataUrl;
               link.click();
-              alert("PNG falhou, baixando como SVG. Abra em um editor para converter.");
+              alert("PNG falhou, baixando como SVG. Abra em um editor de imagens para converter.");
 
-              element.style.animation = '';
+              // Remove a classe após o fallback
               document.querySelectorAll(".no-capture-item").forEach(el => {
                 el.classList.remove("no-capture");
               });
             })
             .catch(function (svgError) {
               console.error("Erro ao gerar SVG:", svgError);
-              alert("Erro ao baixar a imagem.");
+              alert("Erro ao baixar a imagem. Tente recarregar a página ou use um navegador diferente.");
 
-              element.style.animation = '';
+              // Remove a classe em caso de erro
               document.querySelectorAll(".no-capture-item").forEach(el => {
                 el.classList.remove("no-capture");
               });
             });
         } else {
-          alert("Biblioteca de fallback não carregou.");
+          alert("Biblioteca de fallback não carregou. Tente recarregar a página.");
 
-          element.style.animation = '';
+          // Remove a classe em caso de erro
           document.querySelectorAll(".no-capture-item").forEach(el => {
             el.classList.remove("no-capture");
           });
