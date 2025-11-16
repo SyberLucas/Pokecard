@@ -135,7 +135,9 @@
     function salvarImagem() {
   const element = document.querySelector(".pokedex-frame");
 
-  const rect = element.getBoundingClientRect();
+  document.querySelectorAll(".overlay, .backdrop, .tinta, .blur, .filter").forEach(el => {
+        el.classList.add("no-capture");
+    });
 
   html2canvas(element, {
     useCORS: true,
@@ -179,6 +181,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>  
 </body>
 </html>
+
 
 
 
