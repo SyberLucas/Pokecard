@@ -133,57 +133,48 @@
       document.getElementById("errorText").textContent = "";
     }
 
-    function salvarImagem() {
+   function salvarImagem() {
   const element = document.querySelector(".pokedex-frame");
-      const rect = element.getBoundingClientRect();
-
-   document.querySelectorAll(".no-capture-item").forEach(el => {
+  const rect = element.getBoundingClientRect();
+  // Esconde elementos indesejados durante a captura
+  document.querySelectorAll(".no-capture-item").forEach(el => {
     el.classList.add("no-capture");
   });
-
+  // Desativa animações temporariamente para evitar distorções
+  element.style.animation = 'none';
   html2canvas(element, {
     useCORS: true,
     allowTaint: true,
-    logging: false,
     backgroundColor: null,
     removeContainer: true,
-    scale: 2,
-   width: 750px;
-  height: auto;
-    scrollX: 0,
-    scrollY: -window.scrollY
+    scale: 2,  // Mantém para qualidade; teste com 1 se houver problemas
+    width: rect.width,
+    height: rect.height,
+    x: rect.left,  // Adicionado: posiciona exatamente no topo-esquerda do elemento
+    y: rect.top,   // Adicionado: evita deslocamentos
+    scrollX: -rect.left,  // Ajustado: compensa rolagem horizontal baseada no elemento
+    scrollY: -rect.top,   // Ajustado: compensa rolagem vertical baseada no elemento
+    logging: false
   }).then(canvas => {
     const link = document.createElement("a");
     link.download = "meu-time.png";
     link.href = canvas.toDataURL("image/png");
     link.click();
-      }).catch(error => {
-        console.error("Erro ao gerar PNG:", error);
-       
-        if (typeof domtoimage !== 'undefined') {
-          domtoimage.toSvg(element)
-            .then(function (dataUrl) {
-              const link = document.createElement("a");
-              link.download = "meu-time.svg";
-              link.href = dataUrl;
-              link.click();
-              alert("PNG falhou, baixando como SVG. Abra em um editor de imagens para converter.");
-            })
-            .catch(function (svgError) {
-              console.error("Erro ao gerar SVG:", svgError);
-              alert("Erro ao baixar a imagem. Tente recarregar a página ou use um navegador diferente.");
-            });
-        } else {
-          alert("Biblioteca de fallback não carregou. Tente recarregar a página.");
-        }
-      });
-    }
+    // Restaura animações e remove classes
+    element.style.animation = '';  // Restaura a animação original
+    document.querySelectorAll(".no-capture-item").forEach(el => {
+      el.classList.remove("no-capture");
+    });
+  }).catch(error => {
+    console.error("Erro ao gerar PNG:", error);
+
   </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>  
 </body>
 </html>
+
 
 
 
