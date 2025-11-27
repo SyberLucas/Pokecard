@@ -1,3 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Time Pokémon - Web</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="pokedex-frame">
+    <div class="pokedex-top">
+      <div class="lights">
+        <div class="light big"></div>
+        <div class="light small"></div>
+        <div class="light small"></div>
+        <div class="light small"></div>
+      </div>
+    </div>
+
+    <div class="pokedex-screen" id="captureArea">
+      <div class="background-overlay no-capture-item"></div>
+
+      <div class="container">
+        <div class="trainer-section">
+          <div class="trainer-image">
+            <img id="trainerPhoto" src="imagens/trainer-placeholder.png">
+          </div>
+          <div style="flex:1;">
+            <input id="trainerName" placeholder="Treinador" />
+            <input id="teamName" placeholder="Time" />
+          </div>
+        </div>
+
+        <input type="file" id="cameraInput" accept="image/*" style="display:none;" />
+        <button class="button" onclick="document.getElementById('cameraInput').click()">Escolher Foto</button>
+
+        <h2 class="team-title">Meu Time Pokémon (<span id="count">0</span>/6)</h2>
+
+        <input id="pokemonInput" placeholder="Nome do Pokémon" />
+        <button class="button" onclick="buscarPokemon()">Adicionar</button>
+        <p class="error" id="errorText"></p>
+
+        <div class="team">
+          <div class="column" id="col1"></div>
+          <div class="column" id="col2"></div>
+        </div>
+
+        <button class="button reset" onclick="resetTeam()">Resetar Time</button>
+        <button class="button save" onclick="salvarImagem()">Baixar Imagem</button>
+      </div>
+    </div>
+
+    <div class="pokedex-bottom"></div>
+  </div>
 <script>
   let team = [];
 
@@ -93,3 +147,4 @@
     });
   }
 </script>
+
